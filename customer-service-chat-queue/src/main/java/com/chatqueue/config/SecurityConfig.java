@@ -2,4 +2,4 @@ package com.chatqueue.config;
 
 public class SecurityConfig {
 }
-//Hi
+//configuration for security, authentication, and authorization
