@@ -1,4 +1,9 @@
 package com.chatqueue.dto;
 
-public class ChatAssignmentResponse {
-}
+public record ChatAssignmentResponse(
+        Long sessionId,
+        Long agentId,
+        String customerDisplayName,
+        String customerMessage,
+        String customerType
+) {}

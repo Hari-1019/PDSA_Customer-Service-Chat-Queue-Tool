@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Customer Register</title>
+    <link rel="stylesheet" href="/css/customer-style.css">
 </head>
 <body>
-
+<div class="card">
+    <h2>Create account</h2>
+    <input id="name" placeholder="Your name">
+    <input id="email" placeholder="Email">
+    <input id="pwd" type="password" placeholder="Password">
+    <button onclick="go()">Create</button>
+</div>
+<script>
+    function go(){ location.href="dashboard.html"; }
+</script>
 </body>
 </html>

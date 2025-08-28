@@ -1,10 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Customer Chat</title>
+    <link rel="stylesheet" href="/css/customer-style.css">
 </head>
 <body>
+<div class="chat-wrap">
+    <h2>Customer Chat</h2>
+    <div id="info"></div>
+    <div id="chat" class="chat-box"></div>
+    <div class="chat-input">
+        <input id="msg" placeholder="Type message...">
+        <button id="send">Send</button>
+        <button id="close">Close</button>
+    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="/js/websocket-client.js"></script>
+<script>
+    let sessionId = null;
+    const tempId = sessionStorage.getItem('temp_id');
+    const name = sessionStorage.getItem('cx_name') || 'Guest';
+    const type = sessionStorage.getItem('cx_type') || 'NORMAL';
+    const msg0 = sessionStorage.getItem('cx_msg') || 'Hello';
+
+    ChatWS.init(() => {
+        ChatWS.sub(`/topic/cx.${tempId}`, a => {
+            sessionId = a.sessionId;
+            document.getElementById('info').innerText =
+                `Assigned to Agent #${a.agentId} — Session ${sessionId}`;
+            ChatWS.sub(`/topic/chat.${sessionId}`, m => addLine(`${m.fromRole}: ${m.content}`));
+        });
+        // if page opened directly, re-join
+        if (!sessionStorage.getItem('already_sent')) {
+            ChatWS.send('/app/cx.enter', { tempId, displayName: name, message: msg0, customerType: type });
+            sessionStorage.setItem('already_sent', '1');
+        }
+    });
+
+    document.getElementById('send').onclick = () => {
+        if (!sessionId) return;
+        const t = document.getElementById('msg').value.trim();
+        if (!t) return;
+        ChatWS.send('/app/chat.send', { sessionId, fromRole: 'CX', content: t });
+        document.getElementById('msg').value = '';
+    };
+
+    document.getElementById('close').onclick = () => {
+        if (!sessionId) return;
+        ChatWS.send('/app/chat.close', { sessionId });
+    };
+
+    function addLine(s){
+        const box = document.getElementById('chat');
+        const div = document.createElement('div');
+        div.textContent = s;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+    }
+</script>
 </body>
 </html>

@@ -1,4 +1,7 @@
 package com.chatqueue.dto;
 
-public class ChatMessageRequest {
-}
+public record ChatMessageRequest(
+        Long sessionId,
+        String fromRole,   // "CX" or "AGENT"
+        String content
+) {}

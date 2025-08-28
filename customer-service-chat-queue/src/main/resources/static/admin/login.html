@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/css/admin-style.css">
 </head>
 <body>
-
+<div class="card">
+    <h2>Admin Login</h2>
+    <input id="email" placeholder="Email">
+    <input id="pwd" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</div>
+<script>
+    function login(){ location.href="dashboard.html"; }
+</script>
 </body>
 </html>

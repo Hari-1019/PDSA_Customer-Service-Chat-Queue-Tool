@@ -1,4 +1,10 @@
 package com.chatqueue.dto;
 
-public class AdminDashboardResponse {
-}
+import com.chatqueue.model.AgentStatus;
+import java.util.List;
+
+public record AdminDashboardResponse(
+        int vipWaiting,
+        int normalWaiting,
+        List<AgentStatus> agents
+) {}

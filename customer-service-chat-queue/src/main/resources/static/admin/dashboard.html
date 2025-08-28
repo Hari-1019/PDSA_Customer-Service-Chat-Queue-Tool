@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin-style.css">
 </head>
 <body>
+<div class="page">
+    <h1>Live Queues & Agents</h1>
+    <div class="stats">
+        <div class="stat"><span id="vip">0</span><small>VIP waiting</small></div>
+        <div class="stat"><span id="normal">0</span><small>Normal waiting</small></div>
+    </div>
+    <table class="table">
+        <thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Chats Done</th></tr></thead>
+        <tbody id="agents"></tbody>
+    </table>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="/js/websocket-client.js"></script>
+<script src="/js/admin-app.js"></script>
 </body>
 </html>

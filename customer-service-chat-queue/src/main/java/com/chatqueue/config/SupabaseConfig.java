@@ -1,4 +1,4 @@
 package com.chatqueue.config;
 
-public class SupabaseConfig {
-}
+// Optional: helpers if you migrate to Supabase later.
+public class SupabaseConfig {}

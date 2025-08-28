@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Agent Dashboard</title>
+    <link rel="stylesheet" href="/css/agent-style.css">
 </head>
 <body>
+<div class="page">
+    <h1>Agent Dashboard</h1>
+    <div class="actions">
+        <button id="goOnline">Go Online</button>
+        <button id="goOffline">Go Offline</button>
+    </div>
+    <div id="assignment" class="assignment">No assignment yet…</div>
+    <p><a href="chat.html">Open Chat Window</a> (use when assigned)</p>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="/js/websocket-client.js"></script>
+<script src="/js/agent-app.js"></script>
 </body>
 </html>

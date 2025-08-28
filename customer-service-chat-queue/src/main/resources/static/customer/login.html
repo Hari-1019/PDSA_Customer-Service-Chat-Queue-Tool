@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Customer Login</title>
+    <link rel="stylesheet" href="/css/customer-style.css">
 </head>
 <body>
-
+<div class="card">
+    <h2>Login</h2>
+    <input id="email" placeholder="Email">
+    <input id="pwd" type="password" placeholder="Password">
+    <button onclick="go()">Continue</button>
+</div>
+<script>
+    function go(){ location.href="dashboard.html"; }
+</script>
 </body>
 </html>

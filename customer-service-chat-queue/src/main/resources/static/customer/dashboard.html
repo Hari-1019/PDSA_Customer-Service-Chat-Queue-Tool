@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="/css/customer-style.css">
 </head>
 <body>
+<div class="page">
+    <h2>Start a Chat</h2>
+    <div class="grid">
+        <input id="name" placeholder="Your name">
+        <select id="type">
+            <option value="NORMAL">NORMAL</option>
+            <option value="VIP">VIP</option>
+        </select>
+        <input id="message" placeholder="Your message">
+        <button id="go">Join Queue</button>
+    </div>
 
+    <div id="wait" class="wait">Waiting status: <span id="stat">—</span></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="/js/websocket-client.js"></script>
+<script src="/js/customer-app.js"></script>
 </body>
 </html>

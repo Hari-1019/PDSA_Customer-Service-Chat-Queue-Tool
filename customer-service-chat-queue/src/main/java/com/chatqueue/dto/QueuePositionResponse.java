@@ -1,4 +1,6 @@
 package com.chatqueue.dto;
 
-public class QueuePositionResponse {
-}
+public record QueuePositionResponse(
+        int vipAhead,
+        int normalAhead
+) {}

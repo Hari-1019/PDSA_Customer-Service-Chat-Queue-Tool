@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Agent Chat</title>
+    <link rel="stylesheet" href="/css/agent-style.css">
 </head>
 <body>
+<div class="chat-wrap">
+    <h2>Agent Chat</h2>
+    <div id="info"></div>
+    <div id="chat" class="chat-box"></div>
+    <div class="chat-input">
+        <input id="msg" placeholder="Type message...">
+        <button id="send">Send</button>
+        <button id="close">Close Chat</button>
+    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="/js/websocket-client.js"></script>
+<script>
+    let sessionId = null, aid = localStorage.getItem('agent_id') || '1';
+
+    ChatWS.init(() => {
+        ChatWS.sub(`/topic/agent.${aid}`, a => {
+            sessionId = a.sessionId;
+            document.getElementById('info').innerText =
+                `Assigned: ${a.customerDisplayName} (${a.customerType}) — "${a.customerMessage}" [Session ${sessionId}]`;
+            ChatWS.sub(`/topic/chat.${sessionId}`, m => addLine(`${m.fromRole}: ${m.content}`));
+        });
+        ChatWS.send('/app/agent.available', { agentId: Number(aid), available: true });
+    });
+
+    document.getElementById('send').onclick = () => {
+        if (!sessionId) return;
+        const t = document.getElementById('msg').value.trim();
+        if (!t) return;
+        ChatWS.send('/app/chat.send', { sessionId, fromRole: 'AGENT', content: t });
+        document.getElementById('msg').value = '';
+    };
+
+    document.getElementById('close').onclick = () => {
+        if (!sessionId) return;
+        ChatWS.send('/app/chat.close', { sessionId });
+        ChatWS.send('/app/agent.available', { agentId: Number(aid), available: true });
+    };
+
+    function addLine(s){
+        const box = document.getElementById('chat');
+        const div = document.createElement('div');
+        div.textContent = s;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+    }
+</script>
 </body>
 </html>

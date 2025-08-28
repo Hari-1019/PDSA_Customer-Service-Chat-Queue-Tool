@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Agent Login</title>
+    <link rel="stylesheet" href="/css/agent-style.css">
 </head>
 <body>
-
+<div class="card">
+    <h2>Agent Login</h2>
+    <input id="agentId" placeholder="Agent ID (e.g., 1)">
+    <button onclick="go()">Continue</button>
+</div>
+<script>
+    function go(){ localStorage.setItem('agent_id', document.getElementById('agentId').value||'1'); location.href='dashboard.html'; }
+</script>
 </body>
 </html>

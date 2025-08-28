@@ -1,4 +1,7 @@
 package com.chatqueue.dto;
 
-public class RegisterRequest {
-}
+public record RegisterRequest(
+        String name,
+        String email,
+        String password
+) {}

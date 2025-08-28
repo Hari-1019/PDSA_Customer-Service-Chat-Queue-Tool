@@ -1,4 +1,8 @@
 package com.chatqueue.dto;
 
-public class SubmitQueryRequest {
-}
+public record SubmitQueryRequest(
+        String tempId,
+        String displayName,
+        String message,
+        String customerType // NORMAL | VIP
+) {}
