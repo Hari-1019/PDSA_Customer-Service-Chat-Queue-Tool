@@ -1,4 +1,5 @@
 package com.chatqueue.enums;
 
-public class AccountType {
-}
+public enum AccountType {
+    enterprise,
+    individual}

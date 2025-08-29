@@ -1,4 +1,3 @@
 package com.chatqueue.enums;
 
-public class ChatStatus {
-}
+public enum ChatStatus {waiting,in_chat,closed}

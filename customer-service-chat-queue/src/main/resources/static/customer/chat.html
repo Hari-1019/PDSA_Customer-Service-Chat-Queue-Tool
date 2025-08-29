@@ -5,6 +5,36 @@
     <title>Title</title>
 </head>
 <body>
+<div id="chatBox"></div>
+<input type="text" id="msgInput" placeholder="Type a message..." />
+<button id="sendBtn">Send</button>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2/dist/stomp.min.js"></script>
+<script>
+    let stompClient = null;
+    function connect() {
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, () => {
+            stompClient.subscribe('/topic/public', (message) => {
+                const msg = JSON.parse(message.body);
+                document.getElementById("chatBox").innerHTML += `<p>${msg.sender}: ${msg.content}</p>`;
+            });
+        });
+    }
+
+    document.getElementById("sendBtn").onclick = () => {
+        const msg = document.getElementById("msgInput").value;
+        stompClient.send("/app/sendMessage", {}, JSON.stringify({
+            sender: localStorage.getItem("userEmail"),
+            content: msg
+        }));
+        document.getElementById("msgInput").value = "";
+    };
+
+    connect();
+</script>
 
 </body>
 </html>

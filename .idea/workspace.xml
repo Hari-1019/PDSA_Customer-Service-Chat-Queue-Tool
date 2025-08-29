@@ -1,32 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2aef953e-faf6-4d90-870f-bdf1f69063fb" name="Changes" comment="">
+    <list default="true" id="2aef953e-faf6-4d90-870f-bdf1f69063fb" name="Changes" comment="config">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/JWTAuthFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/exception/EmailAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/AgentStatusRow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/QueueStatusRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AgentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AgentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/ChatWebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/ChatWebSocketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/AuthResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/ChatMessageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/ChatMessageRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/QueuePositionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/QueuePositionResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/SubmitQueryRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/SubmitQueryRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/AccountType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/ChatStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/ChatStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/AgentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/QueueStatusRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/UserRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/AdminDashboardResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/AgentStatusRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/AgentStatusRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/ChatRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/ChatRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/MessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/QueueManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/QueueManagerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/util/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/util/JWTUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Hari-1019&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Hari-1019/PDSA_Customer-Service-Chat-Queue-Tool.git&quot;,
+    &quot;accountId&quot;: &quot;406b1328-e6f9-4443-965e-769c53dd51c4&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="31oegjPI99WTYRjecWa9GQAY8hw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Maven.customer-service-chat-queue [clean].executor": "Run",
+    "Maven.customer-service-chat-queue [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CustomerServiceChatQueueApplication.executor": "Run",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "develop",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/USER/OneDrive/Desktop/PDSA/PDSA_Customer-Service-Chat-Queue-Tool",
+    "last_opened_file_path": "C:/Users/USER/Downloads/PDSA_Customer-Service-Chat-Queue-Tool-TestCode",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -35,15 +118,28 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="CustomerServiceChatQueueApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="customer-service-chat-queue" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chatqueue.CustomerServiceChatQueueApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2aef953e-faf6-4d90-870f-bdf1f69063fb" name="Changes" comment="" />
@@ -52,10 +148,39 @@
       <option name="presentableId" value="Default" />
       <updated>1756194965824</updated>
       <workItem from="1756194966948" duration="445000" />
+      <workItem from="1756387565806" duration="14300000" />
+      <workItem from="1756436282005" duration="18640000" />
+      <workItem from="1756461715768" duration="37000" />
+      <workItem from="1756461780082" duration="3998000" />
     </task>
+    <task id="LOCAL-00001" summary="config">
+      <option name="closed" value="true" />
+      <created>1756196145563</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756196145563</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="last update" />
+    <MESSAGE value="config" />
+    <option name="LAST_COMMIT_MESSAGE" value="config" />
   </component>
 </project>

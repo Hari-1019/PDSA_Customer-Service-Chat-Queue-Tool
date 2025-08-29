@@ -1,4 +1,3 @@
 package com.chatqueue.enums;
 
-public class UserRole {
-}
+public enum UserRole { customer,agent,admin}
