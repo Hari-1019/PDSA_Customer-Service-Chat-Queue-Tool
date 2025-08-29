@@ -6,8 +6,9 @@ import lombok.*;
 
 import java.time.Instant;
 import java.util.UUID;
-@Entity @Table(name="chats")
-@Getter @Setter
+@Entity
+@Table(name="chats")
+@Data
 public class Chat {
 
     @Id
@@ -41,4 +42,20 @@ public class Chat {
 
     @Column(name="satisfaction_rating")
     private Integer satisfactionRating;
+
+    public void setAgentId(UUID agentId) {
+        this.agentId = agentId;
+    }
+
+    public void setStatus(ChatStatus status) {
+        this.status = status;
+    }
+
+    public void setStartedAt(Instant startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public Integer getChatId() {
+        return chatId;
+    }
 }

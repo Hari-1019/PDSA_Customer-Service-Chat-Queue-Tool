@@ -1,73 +1,85 @@
 package com.chatqueue.service;
 
 import com.chatqueue.dto.QueuePositionResponse;
-import com.chatqueue.enums.*;
-import com.chatqueue.model.*;
-import com.chatqueue.repository.*;
+import com.chatqueue.enums.ChatStatus;
+import com.chatqueue.model.Chat;
+import com.chatqueue.model.QueueStatusRow;
+import com.chatqueue.repository.ChatRepository;
+import com.chatqueue.repository.QueueStatusRepository;
+import com.chatqueue.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.*;
 
-
-@Service @RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class QueueManagerService {
     private final QueueStatusRepository queueRepo;
     private final ChatRepository chatRepo;
     private final UserRepository userRepo;
 
-    public QueuePositionResponse enqueue(UUID customerId, String initialQuery){
+    /**
+     * Enqueues a customer into the appropriate queue (VIP or Normal) based on their priority level.
+     * Creates a new chat entry and queue status entry.
+     */
+    public QueuePositionResponse enqueue(UUID customerId, String initialQuery) {
         var user = userRepo.findById(customerId).orElseThrow();
-        var queueType = user.getPriorityLevel()!=null && user.getPriorityLevel()==2
-                ? "enterprise_vip" : "individual_normal";
+        var queueType = user.getPriorityLevel() == 2 ? "enterprise_vip" : "individual_normal";
 
-        // Position = 1 + existing rows in that queue
-        int pos = (int) queueRepo.countByQueueType(queueType) + 1;
+        // Calculate position in the queue
+        int position = (int) queueRepo.countByQueueType(queueType) + 1;
 
-        // Create Chat row (waiting)
+        // Create a new chat entry
         var chat = new Chat();
         chat.setCustomerId(customerId);
-        chat.setQueuePosition(pos);
+        chat.setQueuePosition(position);
         chat.setCustomerQuery(initialQuery);
         chat.setStatus(ChatStatus.waiting);
         chatRepo.save(chat);
 
-        // Insert queue row
-        var q = new QueueStatusRow();
-        q.setQueueType(queueType);
-        q.setCustomerId(customerId);
-        q.setPosition(pos);
-        q.setEstimatedWaitMinutes(Math.max(0, (pos-1)*2)); // naive estimate 2 min each
-        queueRepo.save(q);
+        // Create a new queue status entry
+        var queueStatus = new QueueStatusRow();
+        queueStatus.setQueueType(queueType);
+        queueStatus.setCustomerId(customerId);
+        queueStatus.setPosition(position);
+        queueStatus.setEstimatedWaitMinutes(position * 2); // Example: 2 minutes per position
+        queueRepo.save(queueStatus);
 
-        return new QueuePositionResponse(chat.getChatId(), pos);
+        return new QueuePositionResponse(chat.getChatId(), position);
     }
 
-    public Optional<QueueStatusRow> peekNext(){
-        var vip = queueRepo.findByQueueTypeOrderByPositionAsc("enterprise_vip");
-        if(!vip.isEmpty()) return Optional.of(vip.get(0));
-        var normal = queueRepo.findByQueueTypeOrderByPositionAsc("individual_normal");
-        return normal.isEmpty()? Optional.empty() : Optional.of(normal.get(0));
+    /**
+     * Retrieves the next customer in the queue (VIP first, then Normal).
+     */
+    public Optional<QueueStatusRow> peekNext() {
+        var vipQueue = queueRepo.findByQueueTypeOrderByPositionAsc("enterprise_vip");
+        if (!vipQueue.isEmpty()) return Optional.of(vipQueue.get(0));
+        var normalQueue = queueRepo.findByQueueTypeOrderByPositionAsc("individual_normal");
+        return normalQueue.isEmpty() ? Optional.empty() : Optional.of(normalQueue.get(0));
     }
 
-    public void removeFromQueue(UUID customerId){
-        queueRepo.findByCustomerId(customerId).ifPresent(row -> {
-            queueRepo.delete(row);
-            // re-number the remaining queue of that type
-            var all = queueRepo.findByQueueTypeOrderByPositionAsc(row.getQueueType());
-            for (int i=0;i<all.size();i++) {
-                all.get(i).setPosition(i+1);
+    /**
+     * Removes a customer from the queue and reorders the remaining queue.
+     */
+    public void removeFromQueue(UUID customerId) {
+        queueRepo.findByCustomerId(customerId).ifPresent(queue -> {
+            queueRepo.delete(queue);
+            var remainingQueue = queueRepo.findByQueueTypeOrderByPositionAsc(queue.getQueueType());
+            for (int i = 0; i < remainingQueue.size(); i++) {
+                remainingQueue.get(i).setPosition(i + 1);
             }
-            queueRepo.saveAll(all);
+            queueRepo.saveAll(remainingQueue);
         });
     }
 
-    public Map<String,Long> lengths(){
+    /**
+     * Returns the lengths of both VIP and Normal queues.
+     */
+    public Map<String, Long> lengths() {
         return Map.of(
                 "vip", queueRepo.countByQueueType("enterprise_vip"),
                 "normal", queueRepo.countByQueueType("individual_normal")
         );
     }
-
 }

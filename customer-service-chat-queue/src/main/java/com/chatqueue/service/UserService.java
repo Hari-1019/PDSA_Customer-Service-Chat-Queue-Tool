@@ -2,7 +2,6 @@ package com.chatqueue.service;
 
 import com.chatqueue.dto.*;
 import com.chatqueue.enums.*;
-import com.chatqueue.enums.UserRole;
 import com.chatqueue.model.*;
 import com.chatqueue.repository.UserRepository;
 import com.chatqueue.util.JWTUtil;
@@ -13,10 +12,7 @@ import com.chatqueue.exception.EmailAlreadyExistsException;
 
 @Service
 @RequiredArgsConstructor
-
 public class UserService {
-
-
     private final UserRepository users;
     private final PasswordEncoder encoder;
     private final JWTUtil jwt;
@@ -47,5 +43,10 @@ public class UserService {
         var token = jwt.generate(u.getEmail(), u.getRole().name());
         return new AuthResponse(u.getEmail(), u.getRole().name(), token);
     }
-}
 
+    public UserResponse getCurrentUser(String auth) {
+        String email = jwt.email(auth.substring(7));
+        var user = users.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return new UserResponse(user.getName(), user.getEmail());
+    }
+}

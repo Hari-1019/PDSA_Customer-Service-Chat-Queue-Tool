@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Chat</title>
+    <link rel="stylesheet" href="../css/agent-style.css">
 </head>
 <body>
-
+<h1>Agent Chat</h1>
+<button id="toggleStatus">Set Available</button>
+<div id="chatbox">
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button id="sendMessage">Send</button>
+    <button id="closeChat">Close Chat</button>
+</div>
+<script src="../js/websocket-client.js"></script>
 </body>
 </html>

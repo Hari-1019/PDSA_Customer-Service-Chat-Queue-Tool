@@ -9,4 +9,6 @@ public interface ChatRepository extends JpaRepository<Chat, Integer>{
     List<Chat> findByCustomerIdOrderByStartedAtDesc(UUID customerId);
     List<Chat> findByAgentIdOrderByStartedAtDesc(UUID agentId);
     long countByStatus(ChatStatus status);
+
+    Optional<Chat> findByCustomerIdAndStatus(UUID customerId, ChatStatus chatStatus);
 }

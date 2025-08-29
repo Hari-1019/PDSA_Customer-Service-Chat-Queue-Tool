@@ -2,9 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/customer-style.css">
 </head>
 <body>
+<h1 id="welcomeMessage">Hello, User</h1>
+<div id="chatbox">
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button id="sendMessage">Send</button>
+    <button id="closeChat">Close</button>
+    <button onclick="logout()">Logout</button>
+</div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Please log in first.');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        fetch('http://localhost:8080/customer-service-chat-queue/api/auth/me', {
+            headers: { 'Authorization': `Bearer ${token}` },
+        })
+            .then(response => response.json())
+            .then(user => {
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${user.name} 👋`;
+            })
+            .catch(() => {
+                alert('Session expired. Please log in again.');
+                window.location.href = 'login.html';
+            });
+
+        document.getElementById('sendMessage').addEventListener('click', () => {
+            const message = document.getElementById('messageInput').value;
+            if (message.trim()) {
+                const msgDiv = document.createElement('div');
+                msgDiv.textContent = `You: ${message}`;
+                document.getElementById('messages').appendChild(msgDiv);
+                document.getElementById('messageInput').value = '';
+            }
+        });
+
+        document.getElementById('closeChat').addEventListener('click', () => {
+            document.getElementById('messages').innerHTML = '';
+        });
+    });
+
+    function logout() {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+    }
+</script>
 </body>
 </html>

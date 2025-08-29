@@ -4,52 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2aef953e-faf6-4d90-870f-bdf1f69063fb" name="Changes" comment="config">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/JWTAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/exception/EmailAlreadyExistsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/AgentStatusRow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/QueueStatusRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/UserRepository.java" afterDir="false" />
+    <list default="true" id="2aef953e-faf6-4d90-870f-bdf1f69063fb" name="Changes" comment="backend without ui postman check">
+      <change afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/UserResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AgentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AgentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/config/WebSocketConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/ChatWebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/ChatWebSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/AuthResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/ChatMessageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/ChatMessageRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/QueuePositionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/QueuePositionResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/SubmitQueryRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/dto/SubmitQueryRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/AccountType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/ChatStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/ChatStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/enums/UserStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/AgentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/QueueStatusRow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/model/UserRole.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/AdminDashboardResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/AgentStatusRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/AgentStatusRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/ChatRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/ChatRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/repository/MessageRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/ChatService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/QueueManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/QueueManagerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/util/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/java/com/chatqueue/util/JWTUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/agent/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/agent/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/css/customer-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/css/customer-style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/customer/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/js/websocket-client.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service-chat-queue/src/main/resources/static/js/websocket-client.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +122,7 @@
       <workItem from="1756387565806" duration="14300000" />
       <workItem from="1756436282005" duration="18640000" />
       <workItem from="1756461715768" duration="37000" />
-      <workItem from="1756461780082" duration="3998000" />
+      <workItem from="1756461780082" duration="16938000" />
     </task>
     <task id="LOCAL-00001" summary="config">
       <option name="closed" value="true" />
@@ -161,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756196145563</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="backend without ui postman check">
+      <option name="closed" value="true" />
+      <created>1756466497830</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1756466497830</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +160,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="last update" />
     <MESSAGE value="config" />
-    <option name="LAST_COMMIT_MESSAGE" value="config" />
+    <MESSAGE value="backend without ui postman check" />
+    <option name="LAST_COMMIT_MESSAGE" value="backend without ui postman check" />
   </component>
 </project>

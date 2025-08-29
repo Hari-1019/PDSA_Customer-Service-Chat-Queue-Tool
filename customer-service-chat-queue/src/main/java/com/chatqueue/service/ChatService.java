@@ -1,80 +1,114 @@
 package com.chatqueue.service;
 
-import com.chatqueue.enums.*;
-import com.chatqueue.model.*;
-import com.chatqueue.repository.*;
+import com.chatqueue.enums.ChatStatus;
+import com.chatqueue.enums.UserStatus;
+import com.chatqueue.model.AgentStatusRow;
+import com.chatqueue.model.Chat;
+import com.chatqueue.model.Message;
+import com.chatqueue.repository.AgentStatusRepository;
+import com.chatqueue.repository.ChatRepository;
+import com.chatqueue.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.*;
 
-@Service @RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class ChatService {
-    private final ChatRepository chats;
-    private final MessageRepository msgs;
-    private final AgentStatusRepository agents;
-    private final QueueManagerService queue;
+    private final ChatRepository chatRepo; // Repository for managing chat entities in the database
+    private final MessageRepository messageRepo; // Repository for managing message entities in the database
+    private final AgentStatusRepository agentRepo; // Repository for managing agent status entities in the database
+    private final QueueManagerService queueManager; // Service for managing the customer queue
 
+    /**
+     * Assigns the next customer in the queue to an available agent.
+     * - Retrieves the next customer from the queue.
+     * - Finds the customer's waiting chat session.
+     * - Updates the chat session to assign it to the agent and mark it as "in_chat".
+     * - Updates the agent's status to "busy" and links the agent to the chat.
+     * - Removes the customer from the queue.
+     */
+    public Optional<Chat> assignNextToAgent(UUID agentId) {
+        var nextQueue = queueManager.peekNext(); // Get the next customer in the queue
+        if (nextQueue.isEmpty()) return Optional.empty(); // If no customer is in the queue, return empty
 
+        var customerId = nextQueue.get().getCustomerId(); // Get the customer ID from the queue
+        var chat = chatRepo.findByCustomerIdAndStatus(customerId, ChatStatus.waiting)
+                .orElseThrow(() -> new RuntimeException("No waiting chat found")); // Find the waiting chat for the customer
 
-    public Optional<Chat> assignNextToAgent(UUID agentId){
-        // find a pending queue head (VIP first)
-        var next = queue.peekNext();
-        if(next.isEmpty()) return Optional.empty();
+        // Assign the chat to the agent and update its status
+        chat.setAgentId(agentId);
+        chat.setStatus(ChatStatus.in_chat);
+        chat.setStartedAt(Instant.now());
+        chatRepo.save(chat);
 
-        // create/locate chat for customer and set agent
-        var customerId = next.get().getCustomerId();
-        // find the last waiting chat for this customer
-        var waiting = chats.findByCustomerIdOrderByStartedAtDesc(customerId)
-                .stream().filter(c -> c.getStatus()==ChatStatus.waiting).findFirst().orElseThrow();
-
-        waiting.setAgentId(agentId);
-        waiting.setStatus(ChatStatus.in_chat);
-        waiting.setStartedAt(Instant.now());
-        chats.save(waiting);
-
-        // update agent status
-        var st = agents.findById(agentId).orElseGet(() -> {
-            var a = new AgentStatusRow();
-            a.setAgentId(agentId);
-            return a;
+        // Update the agent's status to "busy" and link the agent to the chat
+        var agentStatus = agentRepo.findById(agentId).orElseGet(() -> {
+            var agent = new AgentStatusRow();
+            agent.setAgentId(agentId);
+            return agent;
         });
-        st.setCurrentStatus(UserStatus.busy);
-        st.setCurrentChatId(waiting.getChatId());
-        st.setLastActivity(Instant.now());
-        agents.save(st);
+        agentStatus.setCurrentStatus(UserStatus.busy);
+        agentStatus.setCurrentChatId(chat.getChatId());
+        agentRepo.save(agentStatus);
 
-        // remove customer from queue and re-number
-        queue.removeFromQueue(customerId);
+        // Remove the customer from the queue
+        queueManager.removeFromQueue(customerId);
 
-        return Optional.of(waiting);
+        return Optional.of(chat); // Return the assigned chat
     }
 
-    public Message send(Integer chatId, UUID senderId, String text){
-        var m = new Message();
-        m.setChatId(chatId);
-        m.setSenderId(senderId);
-        m.setMessageText(text);
-        return msgs.save(m);
+    /**
+     * Sends a message in a chat session.
+     * - Validates if the chat exists and is active.
+     * - Creates a new message entity.
+     * - Sets the chat ID, sender ID, and message text.
+     * - Saves the message to the database.
+     */
+    public Message send(Integer chatId, UUID senderId, String text) {
+        var chat = chatRepo.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found")); // Validate chat existence
+        if (chat.getStatus() != ChatStatus.in_chat) {
+            throw new RuntimeException("Chat is not active"); // Ensure the chat is active
+        }
+
+        var message = new Message(); // Create a new message object
+        message.setChatId(chatId); // Set the chat ID
+        message.setSenderId(senderId); // Set the sender ID
+        message.setMessageText(text); // Set the message text
+        message.setTimestamp(Instant.now()); // Set the timestamp
+        return messageRepo.save(message); // Save the message to the database and return it
     }
 
-    public List<Message> history(Integer chatId){
-        return msgs.findByChatIdOrderByTimestampAsc(chatId);
+    /**
+     * Retrieves the chat history for a given chat session.
+     * - Fetches all messages for the specified chat ID.
+     * - Orders the messages by their timestamp in ascending order.
+     */
+    public List<Message> history(Integer chatId) {
+        return messageRepo.findByChatIdOrderByTimestampAsc(chatId); // Retrieve and return the chat history
     }
 
-    public void close(Integer chatId, UUID agentId){
-        var chat = chats.findById(chatId).orElseThrow();
-        chat.setStatus(ChatStatus.closed);
-        chat.setEndedAt(Instant.now());
-        chats.save(chat);
+    /**
+     * Closes a chat session and updates the agent's status to available.
+     * - Validates if the chat exists and the agent is assigned to it.
+     * - Updates the chat status to "closed" and sets the end timestamp.
+     * - Updates the agent's status to "available" and clears the current chat ID.
+     */
+    public void close(Integer chatId, UUID agentId) {
+        var chat = chatRepo.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found")); // Validate chat existence
+        if (!agentId.equals(chat.getAgentId())) {
+            throw new RuntimeException("Agent is not assigned to this chat"); // Ensure the agent is assigned to the chat
+        }
 
-        // free agent
-        var st = agents.findById(agentId).orElseThrow();
-        st.setCurrentStatus(UserStatus.available);
-        st.setCurrentChatId(null);
-        st.setTotalChatsToday((st.getTotalChatsToday()==null?0:st.getTotalChatsToday())+1);
-        st.setLastActivity(Instant.now());
-        agents.save(st);
+        chat.setStatus(ChatStatus.closed); // Set the chat status to "closed"
+        chat.setEndedAt(Instant.now()); // Set the end timestamp
+        chatRepo.save(chat); // Save the updated chat
+
+        var agentStatus = agentRepo.findById(agentId).orElseThrow(() -> new RuntimeException("Agent not found")); // Validate agent existence
+        agentStatus.setCurrentStatus(UserStatus.available); // Set the agent's status to "available"
+        agentStatus.setCurrentChatId(null); // Clear the current chat ID
+        agentRepo.save(agentStatus); // Save the updated agent status
     }
 }

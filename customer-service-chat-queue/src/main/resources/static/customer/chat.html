@@ -2,39 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Chat</title>
+    <link rel="stylesheet" href="../css/customer-style.css">
 </head>
 <body>
-<div id="chatBox"></div>
-<input type="text" id="msgInput" placeholder="Type a message..." />
-<button id="sendBtn">Send</button>
-
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/stompjs@2/dist/stomp.min.js"></script>
-<script>
-    let stompClient = null;
-    function connect() {
-        const socket = new SockJS('/ws');
-        stompClient = Stomp.over(socket);
-        stompClient.connect({}, () => {
-            stompClient.subscribe('/topic/public', (message) => {
-                const msg = JSON.parse(message.body);
-                document.getElementById("chatBox").innerHTML += `<p>${msg.sender}: ${msg.content}</p>`;
-            });
-        });
-    }
-
-    document.getElementById("sendBtn").onclick = () => {
-        const msg = document.getElementById("msgInput").value;
-        stompClient.send("/app/sendMessage", {}, JSON.stringify({
-            sender: localStorage.getItem("userEmail"),
-            content: msg
-        }));
-        document.getElementById("msgInput").value = "";
-    };
-
-    connect();
-</script>
-
+<h1>Customer Chat</h1>
+<div id="queuePosition">Queue Position: <span id="position">Loading...</span></div>
+<div id="chatbox">
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button id="sendMessage">Send</button>
+</div>
+<script src="../js/websocket-client.js"></script>
 </body>
 </html>

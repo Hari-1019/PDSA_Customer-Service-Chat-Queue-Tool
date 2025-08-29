@@ -1,0 +1,76 @@
+/* customer-style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #00c6ff;
+}
+
+form, #chatbox {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+input, select {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+button {
+    background-color: #00c6ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #007acc;
+}
+
+#messages {
+    height: 200px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#messageInput {
+    margin-bottom: 10px;
+}
+roleSelect{
+    color: #0e0202;
+    background-color: #ffffff;
+
+}
