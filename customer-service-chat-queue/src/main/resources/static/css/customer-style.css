@@ -69,8 +69,22 @@ button:hover {
 #messageInput {
     margin-bottom: 10px;
 }
-roleSelect{
-    color: #0e0202;
-    background-color: #ffffff;
-
+select option {
+    background-color: #2c5364;
+    color: #fff;
 }
+
+/* When hovering over options */
+select option:hover {
+    background-color: #00c6ff;
+    color: #000;
+}
+
+/* Optional: highlight selected option */
+select:focus option:checked {
+    background-color: #007acc;
+    color: #fff;
+}
+
+
+

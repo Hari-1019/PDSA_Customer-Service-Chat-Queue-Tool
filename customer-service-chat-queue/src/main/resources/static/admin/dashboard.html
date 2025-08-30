@@ -1,10 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/admin-style.css" />
 </head>
 <body>
+<h1>Welcome, Admin</h1>
+<div class="dashboard">
+    <div class="stats">
+        <h2>Queue Monitor</h2>
+        <p>VIP Customers in Queue: <span id="vipCount">0</span></p>
+        <p>Normal Customers in Queue: <span id="normalCount">0</span></p>
+    </div>
 
+    <div class="agents">
+        <h2>Agent Status</h2>
+        <ul id="agentList">
+            <!-- Dynamically filled -->
+        </ul>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        const path = window.location.pathname;
+
+        // Role-based access control
+        if (!token) {
+            alert('Please log in first.');
+            window.location.href = '../customer/login.html';
+            return;
+        }
+
+        if (path.includes('/admin/') && role !== 'admin') {
+            alert('Access denied. Admins only.');
+            window.location.href = '../customer/login.html';
+            return;
+        }
+
+        // Fetch queue stats
+        fetch('http://localhost:8080/customer-service-chat-queue/api/admin/queue-status', {
+            headers: { 'Authorization': `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('vipCount').textContent = data.vipCount;
+                document.getElementById('normalCount').textContent = data.normalCount;
+            });
+
+        // Fetch agent status
+        fetch('http://localhost:8080/customer-service-chat-queue/api/admin/agents', {
+            headers: { 'Authorization': `Bearer ${token}` },
+        })
+            .then(res => res.json())
+            .then(agents => {
+                const list = document.getElementById('agentList');
+                agents.forEach(agent => {
+                    const li = document.createElement('li');
+                    li.textContent = `${agent.name} - ${agent.status}`;
+                    list.appendChild(li);
+                });
+            });
+    });
+
+   /* function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        window.location.href = 'admin-login.html';
+    } */
+
+    function logout() {
+        localStorage.clear();
+        alert('You have been logged out.');
+        window.location.href = '../customer/login.html';
+    }
+
+</script>
 </body>
 </html>

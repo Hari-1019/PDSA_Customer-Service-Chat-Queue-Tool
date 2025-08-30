@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="../css/customer-style.css">
+    <link rel="stylesheet" href="../css/customer-style.css" />
 </head>
 <body>
 <h1>Login</h1>
 <form id="loginForm">
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
     <button type="submit">Login</button>
     <button type="button" onclick="window.location.href='register.html'">No account? Register</button>
 </form>
@@ -30,18 +30,38 @@
 
             if (response.ok) {
                 const result = await response.json();
+
+                // Store token and role
                 localStorage.setItem('token', result.token);
-                alert('Successfully logged in!');
-                window.location.href = 'dashboard.html';
+                localStorage.setItem('role', result.role);
+                localStorage.setItem('email', result.email);
+
+                // Redirect based on role
+                switch (result.role) {
+                    case 'admin':
+                        window.location.href = '../admin/dashboard.html';
+                        break;
+                    case 'agent':
+                        window.location.href = '../agent/dashboard.html';
+                        break;
+                    case 'customer':
+                        window.location.href = '../customer/dashboard.html';
+                        break;
+                    default:
+                        alert('Unknown role. Access denied.');
+                }
             } else {
                 const error = await response.text();
-                alert(`Error: ${error}`);
+                alert(`Login failed: ${error}`);
             }
         } catch (err) {
             console.error(err);
             alert('An error occurred. Please try again.');
         }
     });
+
+
 </script>
+
 </body>
 </html>

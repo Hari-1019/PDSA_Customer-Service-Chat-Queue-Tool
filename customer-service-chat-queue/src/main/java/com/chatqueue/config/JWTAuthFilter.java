@@ -52,4 +52,5 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         String relative = path.substring(context.length()); // e.g. "/api/auth/register"
         return relative.startsWith("/api/auth/");
     }
+
 }

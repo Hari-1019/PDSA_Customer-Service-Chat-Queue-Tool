@@ -44,9 +44,11 @@ public class UserService {
         return new AuthResponse(u.getEmail(), u.getRole().name(), token);
     }
 
+
     public UserResponse getCurrentUser(String auth) {
         String email = jwt.email(auth.substring(7));
         var user = users.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
         return new UserResponse(user.getName(), user.getEmail());
     }
+
 }
