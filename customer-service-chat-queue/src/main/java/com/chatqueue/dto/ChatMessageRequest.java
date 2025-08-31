@@ -1,9 +1,9 @@
 package com.chatqueue.dto;
-import lombok.*;
 
-@Getter @Setter
+import lombok.Data;
+
+@Data
 public class ChatMessageRequest {
-
-    private Integer chatId;
-    private String message;
+    private String messageText;
+    // Remove chatId since we'll determine it on the server
 }

@@ -24,7 +24,12 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> getCurrentUser(@RequestHeader("Authorization") String auth) {
-        return ResponseEntity.ok(users.getCurrentUser(auth));
+    public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+        try {
+            UserResponse userResponse = users.getCurrentUser(authHeader);
+            return ResponseEntity.ok(userResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid token or user not found");
+        }
     }
 }

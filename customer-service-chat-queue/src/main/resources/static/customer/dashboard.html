@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Customer Dashboard</title>
     <link rel="stylesheet" href="../css/customer-style.css">
 </head>
 <body>
 <h1 id="welcomeMessage">Hello, User</h1>
+
+<div id="queueStatus">
+    <p id="positionInfo">Your position in queue: -</p>
+    <p id="waitTimeInfo">Estimated wait time: - minutes</p>
+</div>
+
 <div id="chatbox">
     <div id="messages"></div>
     <input type="text" id="messageInput" placeholder="Type a message">
     <button id="sendMessage">Send</button>
-    <button id="closeChat">Close</button>
+    <button id="closeChat">Close Chat</button>
     <button onclick="logout()">Logout</button>
 </div>
 
 <script>
+    const API_BASE = 'http://localhost:8080/customer-service-chat-queue/api';
+    let currentChatId = null;
+    let queueCheckInterval = null;
+    let isInQueue = false;
+
     document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -25,34 +36,180 @@
             return;
         }
 
-        fetch('http://localhost:8080/customer-service-chat-queue/api/auth/me', {
+        // Fetch user info
+        fetchUserInfo(token);
+
+        // Start checking queue position
+        startQueuePositionChecker(token);
+
+        // Setup message sending
+        setupMessageSending(token);
+
+        // Setup close chat button
+        setupCloseChatButton(token);
+    });
+
+    function fetchUserInfo(token) {
+        fetch(`${API_BASE}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` },
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user info');
+                }
+                return response.json();
+            })
             .then(user => {
                 document.getElementById('welcomeMessage').textContent = `Welcome, ${user.name} 👋`;
             })
-            .catch(() => {
+            .catch((error) => {
+                console.error('Error fetching user info:', error);
                 alert('Session expired. Please log in again.');
                 window.location.href = 'login.html';
             });
+    }
 
+    function startQueuePositionChecker(token) {
+        // Check immediately
+        checkQueuePosition(token);
+
+        // Then check every 30 seconds
+        queueCheckInterval = setInterval(() => checkQueuePosition(token), 30000);
+    }
+
+    function checkQueuePosition(token) {
+        if (!isInQueue) return; // Only check if in queue
+
+        fetch(`${API_BASE}/customer/queue-position`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch queue position');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.position !== undefined && data.position > 0) {
+                    document.getElementById('positionInfo').textContent =
+                        `Your position in queue: ${data.position}`;
+                    document.getElementById('waitTimeInfo').textContent =
+                        `Estimated wait time: ${data.estimatedWaitMinutes} minutes`;
+                    isInQueue = true;
+                } else {
+                    document.getElementById('positionInfo').textContent =
+                        "You are not in the queue";
+                    document.getElementById('waitTimeInfo').textContent =
+                        "";
+                    isInQueue = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking queue position:', error);
+                isInQueue = false;
+            });
+    }
+
+    function setupMessageSending(token) {
         document.getElementById('sendMessage').addEventListener('click', () => {
-            const message = document.getElementById('messageInput').value;
-            if (message.trim()) {
+            const message = document.getElementById('messageInput').value.trim();
+            if (message) {
+                sendMessage(token, message);
+            }
+        });
+
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const message = document.getElementById('messageInput').value.trim();
+                if (message) {
+                    sendMessage(token, message);
+                }
+            }
+        });
+    }
+
+    function setupCloseChatButton(token) {
+        document.getElementById('closeChat').addEventListener('click', () => {
+            closeChat(token);
+        });
+    }
+
+    function sendMessage(token, message) {
+        fetch(`${API_BASE}/customer/send`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ messageText: message })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send message');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.chatId) {
+                    currentChatId = data.chatId;
+                }
+
+                // Add message to UI
                 const msgDiv = document.createElement('div');
                 msgDiv.textContent = `You: ${message}`;
                 document.getElementById('messages').appendChild(msgDiv);
                 document.getElementById('messageInput').value = '';
-            }
-        });
 
-        document.getElementById('closeChat').addEventListener('click', () => {
-            document.getElementById('messages').innerHTML = '';
-        });
-    });
+                // Update queue status
+                isInQueue = true;
+                checkQueuePosition(token);
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                alert("Message failed to send. Please try again.");
+            });
+    }
+
+    function closeChat(token) {
+        if (!confirm("Are you sure you want to close the chat and leave the queue?")) {
+            return;
+        }
+
+        fetch(`${API_BASE}/customer/close-chat`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to close chat');
+                }
+                return response.text();
+            })
+            .then(message => {
+                alert(message);
+
+                // Clear messages
+                document.getElementById('messages').innerHTML = '';
+
+                // Update queue status
+                isInQueue = false;
+                document.getElementById('positionInfo').textContent = "You are not in the queue";
+                document.getElementById('waitTimeInfo').textContent = "";
+
+                console.log("Chat closed successfully");
+            })
+            .catch(error => {
+                console.error('Error closing chat:', error);
+                alert("Failed to close chat. Please try again.");
+            });
+    }
 
     function logout() {
+        if (queueCheckInterval) {
+            clearInterval(queueCheckInterval);
+        }
         localStorage.removeItem('token');
         window.location.href = 'login.html';
     }

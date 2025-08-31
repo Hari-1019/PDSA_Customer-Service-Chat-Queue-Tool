@@ -7,4 +7,5 @@ import java.util.*;
 
 public interface AgentStatusRepository extends JpaRepository<AgentStatusRow, UUID>{
     List<AgentStatusRow> findByCurrentStatus(UserStatus status);
+    List<AgentStatusRow> findAll();
 }

@@ -1,17 +1,14 @@
 package com.chatqueue.dto;
 
+import lombok.Data;
 
-import lombok.*;
-
-
-@Getter @Setter
+@Data
 public class RegisterRequest {
     private String name;
     private String email;
     private String password;
-    private String role;        // customer/agent/admin
-    private String accountType; // enterprise/individual
-    private String companyName; // optional
-
-
+    private String role;
+    private String accountType;
+    private String companyName;
+    private Integer priorityLevel;
 }

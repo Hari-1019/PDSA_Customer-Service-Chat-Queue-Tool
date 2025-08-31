@@ -1,18 +1,11 @@
 package com.chatqueue.dto;
 
-import lombok.*;
+import lombok.Data;
 
-@Getter @Setter
-
+@Data
 public class AuthResponse {
+    private String token;
     private String email;
     private String role;
-    private String token;
-
-    public AuthResponse(String email, String role, String token) {
-        this.email = email;
-        this.role = role;
-        this.token = token;
-    }
-
+    private String message;
 }

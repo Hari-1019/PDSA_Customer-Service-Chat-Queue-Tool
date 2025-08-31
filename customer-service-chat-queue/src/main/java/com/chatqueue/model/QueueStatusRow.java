@@ -12,6 +12,9 @@ import java.util.UUID;
 public class QueueStatusRow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+
+
     @Column(name="queue_id")
     private Integer queueId;
 

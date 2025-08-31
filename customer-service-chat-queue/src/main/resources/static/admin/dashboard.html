@@ -13,6 +13,9 @@
         <h2>Queue Monitor</h2>
         <p>VIP Customers in Queue: <span id="vipCount">0</span></p>
         <p>Normal Customers in Queue: <span id="normalCount">0</span></p>
+        <p>Waiting Chats: <span id="waitingChats">0</span></p>
+        <p>Active Chats: <span id="activeChats">0</span></p>
+        <p>Closed Chats: <span id="closedChats">0</span></p>
     </div>
 
     <div class="agents">
@@ -29,7 +32,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('token');
         const role = localStorage.getItem('role');
-        const path = window.location.pathname;
 
         // Role-based access control
         if (!token) {
@@ -38,49 +40,69 @@
             return;
         }
 
-        if (path.includes('/admin/') && role !== 'admin') {
+        if (role !== 'admin') {
             alert('Access denied. Admins only.');
             window.location.href = '../customer/login.html';
             return;
         }
 
-        // Fetch queue stats
-        fetch('http://localhost:8080/customer-service-chat-queue/api/admin/queue-status', {
-            headers: { 'Authorization': `Bearer ${token}` },
-        })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('vipCount').textContent = data.vipCount;
-                document.getElementById('normalCount').textContent = data.normalCount;
-            });
+        // Fetch dashboard data
+        fetchDashboardData(token);
 
-        // Fetch agent status
-        fetch('http://localhost:8080/customer-service-chat-queue/api/admin/agents', {
-            headers: { 'Authorization': `Bearer ${token}` },
-        })
-            .then(res => res.json())
-            .then(agents => {
-                const list = document.getElementById('agentList');
-                agents.forEach(agent => {
-                    const li = document.createElement('li');
-                    li.textContent = `${agent.name} - ${agent.status}`;
-                    list.appendChild(li);
-                });
-            });
+        // Refresh data every 30 seconds
+        setInterval(() => fetchDashboardData(token), 30000);
     });
 
-   /* function logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        window.location.href = 'admin-login.html';
-    } */
+    function fetchDashboardData(token) {
+        // Fetch complete dashboard data
+        fetch('http://localhost:8080/customer-service-chat-queue/api/admin/dashboard', {
+            headers: { 'Authorization': `Bearer ${token}` },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch dashboard data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Update queue stats
+                document.getElementById('vipCount').textContent = data.vipQueue || 0;
+                document.getElementById('normalCount').textContent = data.normalQueue || 0;
+                document.getElementById('waitingChats').textContent = data.waitingChats || 0;
+                document.getElementById('activeChats').textContent = data.inChat || 0;
+                document.getElementById('closedChats').textContent = data.closed || 0;
+
+                // Update agent list
+                const agentList = document.getElementById('agentList');
+                agentList.innerHTML = ''; // Clear previous data
+
+                if (data.agents && data.agents.length > 0) {
+                    data.agents.forEach(agent => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                        <strong>${agent.name}</strong> -
+                        Status: ${agent.status} -
+                        Current Chat: ${agent.currentChat || 'None'} -
+                        Today's Chats: ${agent.totalChatsToday}
+                    `;
+                        agentList.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = 'No agents available';
+                    agentList.appendChild(li);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+            });
+    }
 
     function logout() {
         localStorage.clear();
         alert('You have been logged out.');
         window.location.href = '../customer/login.html';
     }
-
 </script>
 </body>
 </html>

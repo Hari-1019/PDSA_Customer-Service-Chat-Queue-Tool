@@ -29,11 +29,19 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             try {
                 String token = header.substring(7);
+
+                // Validate token first
+                if (!isTokenValid(token)) {
+                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
+
                 String email = jwtUtil.email(token);
                 String role = jwtUtil.role(token);
 
+                // Add "ROLE_" prefix for Spring Security authority
                 var auth = new UsernamePasswordAuthenticationToken(
-                        email, null, List.of(new SimpleGrantedAuthority(role))
+                        email, null, List.of(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                 );
                 SecurityContextHolder.getContext().setAuthentication(auth);
             } catch (Exception e) {
@@ -45,12 +53,26 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         chain.doFilter(req, res);
     }
 
+    private boolean isTokenValid(String token) {
+        try {
+            // Basic validation - check if we can extract email and role
+            String email = jwtUtil.email(token);
+            String role = jwtUtil.role(token);
+            return email != null && !email.isEmpty() && role != null && !role.isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        String context = request.getContextPath(); // e.g. "/customer-service-chat-queue"
-        String relative = path.substring(context.length()); // e.g. "/api/auth/register"
-        return relative.startsWith("/api/auth/");
-    }
+        String contextPath = request.getContextPath();
 
+        // Remove context path to get the relative path
+        String relativePath = path.substring(contextPath.length());
+
+        // Skip authentication for auth endpoints
+        return relativePath.startsWith("/api/auth/");
+    }
 }
