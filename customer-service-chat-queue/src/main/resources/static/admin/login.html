@@ -2,9 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
 </head>
 <body>
-
+<div class="login-container">
+    <div class="logo">
+        <h1>Admin Portal</h1>
+        <p>Sign in to manage chat assignments.</p>
+    </div>
+    <div id="errorMessage" class="error-message"></div>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn" id="loginBtn">Sign In</button>
+    </form>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Signing you in...</p>
+    </div>
+</div>
+<script src="../js/admin-login.js"></script>
 </body>
 </html>

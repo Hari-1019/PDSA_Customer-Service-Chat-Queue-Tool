@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Assign Chat</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
 </head>
 <body>
-
+<div class="container">
+    <h2>Assign Customers to Agents</h2>
+    <div id="status"></div>
+    <div class="lists">
+        <div>
+            <h3>Waiting Customers</h3>
+            <ul id="customerList"></ul>
+        </div>
+        <div>
+            <h3>Available Agents</h3>
+            <ul id="agentList"></ul>
+        </div>
+    </div>
+    <div id="assignSection" style="display:none;">
+        <h3>Assign</h3>
+        <select id="selectCustomer"></select>
+        <select id="selectAgent"></select>
+        <button id="assignBtn">Assign</button>
+    </div>
+</div>
+<script src="../js/admin-assign.js"></script>
 </body>
 </html>
