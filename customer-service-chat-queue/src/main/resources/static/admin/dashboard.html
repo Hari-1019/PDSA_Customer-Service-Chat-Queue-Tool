@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Assign Chat</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/admin-style.css">
 </head>
 <body>
-<div class="container">
+<div class="dashboard-container">
+    <div class="logo">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, <span id="adminName"></span>!</p>
+    </div>
+    <div class="dashboard-links">
+        <button class="btn" id="logoutBtn">Logout</button>
+    </div>
     <h2>Assign Customers to Agents</h2>
     <div id="status"></div>
     <div class="lists">
@@ -26,6 +33,6 @@
         <button id="assignBtn">Assign</button>
     </div>
 </div>
-<script src="../js/admin-assign.js"></script>
+<script src="../js/admin-app.js"></script>
 </body>
 </html>
