@@ -41,9 +41,9 @@ public class UserService {
         }
         if (req.getPriorityLevel() != null) {
             user.setPriorityLevel(req.getPriorityLevel());
-        }
+        }//extra optional field company name priority
 
-        userRepository.save(user);
+        userRepository.save(user);//save new user in db
 
         // Generate JWT token
         String token = jwtUtil.generate(user.getEmail(), user.getRole().name());
@@ -82,7 +82,7 @@ public class UserService {
         response.setToken(token);
         response.setEmail(user.getEmail());
         response.setRole(user.getRole().name());
-        response.setMessage("Login successful");
+        response.setMessage("Login successful");//build and return respond
 
         return response;
     }

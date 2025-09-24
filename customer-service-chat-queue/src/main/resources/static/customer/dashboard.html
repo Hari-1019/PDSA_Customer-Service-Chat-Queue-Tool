@@ -214,5 +214,40 @@
         window.location.href = 'login.html';
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<script>
+    let customerStompClient = null;
+    let customerChatId = null;
+
+    function connectCustomerWebSocket() {
+        const socket = new SockJS('http://localhost:8080/customer-service-chat-queue/ws');
+        customerStompClient = Stomp.over(socket);
+
+        customerStompClient.connect({}, function(frame) {
+            console.log('Customer connected: ' + frame);
+
+            if (customerChatId) {
+                customerStompClient.subscribe('/queue/chat/' + customerChatId, function(message) {
+                    const msg = JSON.parse(message.body);
+                    if (msg.senderId !== currentCustomerId) { // Only show agent messages
+                        const msgDiv = document.createElement('div');
+                        msgDiv.textContent = `Agent: ${msg.messageText}`;
+                        document.getElementById('messages').appendChild(msgDiv);
+                    }
+                });
+
+                customerStompClient.subscribe('/queue/chat-ended/' + customerChatId, function(message) {
+                    alert('Chat ended by agent: ' + message.body);
+                    document.getElementById('messages').innerHTML = '';
+                    document.getElementById('queueStatus').innerHTML = `
+                        <p>Chat ended. Thank you for reaching out to us.</p>
+                    `;
+                });
+            }
+        });
+    }
+</script>
 </body>
 </html>

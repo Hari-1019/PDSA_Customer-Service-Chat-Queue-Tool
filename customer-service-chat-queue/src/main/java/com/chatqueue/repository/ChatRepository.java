@@ -13,4 +13,6 @@ public interface ChatRepository extends JpaRepository<Chat, Integer>{
     // Make sure this method exists
     Optional<Chat> findByCustomerIdAndStatus(UUID customerId, ChatStatus status);
 
+    // Add this if missing
+    Optional<Chat> findById(Integer chatId);
 }

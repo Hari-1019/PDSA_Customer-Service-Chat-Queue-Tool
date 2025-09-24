@@ -108,10 +108,12 @@ public class QueueManagerService {
     // Get queue lengths for admin dashboard
     public Map<String, Long> lengths() {
         Map<String, Long> lengths = new HashMap<>();
-        lengths.put("vip", queueStatusRepository.countByQueueType("enterprise_vip"));
-        lengths.put("normal", queueStatusRepository.countByQueueType("individual_normal"));
+        lengths.put("enterprise_vip", queueStatusRepository.countByQueueType("enterprise_vip"));
+        lengths.put("individual_normal", queueStatusRepository.countByQueueType("individual_normal"));
         return lengths;
     }
+
+
 
     private int calculateEstimatedWaitTime(String queueType, int position) {
         // Simple estimation: 2 minutes per position for VIP, 5 minutes for normal

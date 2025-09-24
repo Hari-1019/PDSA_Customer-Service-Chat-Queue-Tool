@@ -2,9 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard</title>
+    <link rel="stylesheet" href="../css/agent-style.css">
+    <!-- Add SockJS and STOMP clients for WebSocket support -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <!-- Reference the external agent-app.js file -->
+    <script src="../js/agent-app.js"></script>
 </head>
 <body>
+<header>
+    <h1 id="welcomeMessage">Welcome, Agent</h1>
+    <div class="status-controls">
+        <button id="availableBtn" class="status-btn available">Available</button>
+        <button id="busyBtn" class="status-btn busy">Busy</button>
+        <button onclick="logout()" class="logout-btn">Logout</button>
+    </div>
+</header>
 
+<div class="dashboard">
+    <div class="queue-info">
+        <h2>Queue Status</h2>
+        <div class="stats">
+            <p>VIP Customers: <span id="vipCount">0</span></p>
+            <p>Normal Customers: <span id="normalCount">0</span></p>
+            <p>Your Status: <span id="agentStatus">offline</span></p>
+        </div>
+    </div>
+
+    <div class="chat-section">
+        <h2>Current Chat</h2>
+        <div id="currentChatInfo" class="chat-info">
+            <p>No active chat</p>
+        </div>
+
+        <div id="chatContainer" class="chat-container hidden">
+            <div id="chatMessages" class="messages"></div>
+            <div class="message-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendMessage">Send</button>
+                <button id="endChat" class="end-chat-btn">End Chat</button>
+            </div>
+        </div>
+
+        <div id="waitingForChat" class="waiting-message">
+            <p>Waiting for customer assignment...</p>
+            <button id="getNextCustomer" class="get-customer-btn">Get Next Customer</button>
+        </div>
+    </div>
+
+    <div class="assigned-customers">
+        <h2>Assigned Customers</h2>
+        <div id="assignedList" class="assigned-list">
+            <!-- Will be populated dynamically -->
+        </div>
+    </div>
+</div>
 </body>
 </html>

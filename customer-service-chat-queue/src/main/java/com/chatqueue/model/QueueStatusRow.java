@@ -12,14 +12,11 @@ import java.util.UUID;
 public class QueueStatusRow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-
-
     @Column(name="queue_id")
-    private Integer queueId;
+    private Long  queueId; // Make sure this exists
 
     @Column(name="queue_type")
-    private String queueType; // "enterprise_vip" or "individual_normal"
+    private String queueType;
 
     @Column(name="customer_id")
     private UUID customerId;
